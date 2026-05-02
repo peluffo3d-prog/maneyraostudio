@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>maneyraostudio — Automatizamos tu negocio</title>
+  <meta name="description" content="Bot WhatsApp, tiendas online y automatizaciones para negocios en Argentina. Morón, Buenos Aires.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --gray-100: #f5f5f5;
+      --gray-200: #e8e8e8;
+      --gray-400: #999;
+      --gray-600: #555;
+      --accent: #6c47ff;
+      --accent-light: #ede9ff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 40px;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 17px; font-weight: 800; letter-spacing: -0.5px;
+      color: var(--black); text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      font-size: 13px; font-weight: 500; color: var(--gray-600);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); }
+    .nav-cta {
+      background: var(--black); color: var(--white);
+      padding: 9px 20px; border-radius: 8px;
+      font-size: 13px; font-weight: 600; text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.8; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 100px 40px 80px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent-light); color: var(--accent);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 6px 14px; border-radius: 50px;
+      margin-bottom: 32px; width: fit-content;
+    }
+    .hero-badge::before { content: '●'; font-size: 8px; }
+    .hero h1 {
+      font-size: clamp(42px, 7vw, 80px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      max-width: 800px;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero-sub {
+      font-size: 18px; color: var(--gray-600); font-weight: 400;
+      max-width: 520px; line-height: 1.7; margin-bottom: 48px;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--black); color: var(--white);
+      padding: 14px 28px; border-radius: 10px;
+      font-size: 15px; font-weight: 600; text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .btn-secondary {
+      background: transparent; color: var(--black);
+      padding: 14px 28px; border-radius: 10px;
+      font-size: 15px; font-weight: 600; text-decoration: none;
+      border: 1.5px solid var(--gray-200);
+      transition: border-color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--black); }
+
+    .hero-stats {
+      display: flex; gap: 48px; flex-wrap: wrap;
+      margin-top: 80px; padding-top: 48px;
+      border-top: 1px solid var(--gray-200);
+    }
+    .stat-num { font-size: 32px; font-weight: 800; letter-spacing: -1px; }
+    .stat-label { font-size: 13px; color: var(--gray-400); margin-top: 2px; }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 100px 40px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800; letter-spacing: -1px;
+      line-height: 1.1; margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 16px; color: var(--gray-600);
+      max-width: 500px; line-height: 1.7; margin-bottom: 60px;
+    }
+
+    /* ── SERVICIOS ── */
+    #servicios { background: var(--gray-100); }
+    .servicios-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .servicio-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 36px;
+      border: 1px solid var(--gray-200);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .servicio-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.08); }
+    .servicio-card.featured { border-color: var(--accent); }
+    .servicio-card.featured::before {
+      content: 'MÁS PEDIDO';
+      position: absolute; top: 20px; right: 20px;
+      background: var(--accent); color: white;
+      font-size: 9px; font-weight: 700; letter-spacing: 1px;
+      padding: 4px 10px; border-radius: 50px;
+    }
+    .servicio-ico {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 20px;
+      background: var(--accent-light);
+    }
+    .servicio-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+    .servicio-card p { font-size: 14px; color: var(--gray-600); line-height: 1.7; margin-bottom: 24px; }
+    .servicio-features { list-style: none; margin-bottom: 28px; }
+    .servicio-features li {
+      font-size: 13px; color: var(--gray-600); padding: 5px 0;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .servicio-features li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+    .servicio-precio {
+      font-size: 28px; font-weight: 800; letter-spacing: -0.5px;
+    }
+    .servicio-precio span { font-size: 14px; font-weight: 400; color: var(--gray-400); }
+
+    /* ── PROYECTOS ── */
+    .proyectos-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .proyecto-card {
+      border: 1px solid var(--gray-200); border-radius: 16px;
+      overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .proyecto-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+    .proyecto-img {
+      height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 56px;
+    }
+    .proyecto-img.beauty { background: linear-gradient(135deg, #fdf0f5, #f5e8f5); }
+    .proyecto-img.laser  { background: linear-gradient(135deg, #0a0a0a, #2a2a2a); color: white; }
+    .proyecto-img.bot    { background: linear-gradient(135deg, #e8f5e8, #d4f0d4); }
+    .proyecto-body { padding: 28px; }
+    .proyecto-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .proyecto-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 50px;
+      background: var(--accent-light); color: var(--accent);
+    }
+    .proyecto-body h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .proyecto-body p { font-size: 13px; color: var(--gray-600); line-height: 1.7; margin-bottom: 20px; }
+    .proyecto-link {
+      font-size: 13px; font-weight: 600; color: var(--accent);
+      text-decoration: none; display: inline-flex; align-items: center; gap: 4px;
+    }
+    .proyecto-link:hover { text-decoration: underline; }
+
+    /* ── DEMO N8N ── */
+    #demo { background: var(--black); color: var(--white); }
+    #demo .section-tag { color: #a78bfa; }
+    #demo .section-title { color: var(--white); }
+    #demo .section-sub { color: rgba(255,255,255,0.5); }
+
+    .demo-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
+    .demo-flow {
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .flow-step {
+      display: flex; gap: 20px; align-items: flex-start;
+      padding: 20px 0;
+      border-left: 2px solid #333;
+      padding-left: 24px; position: relative;
+    }
+    .flow-step::before {
+      content: '';
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--accent);
+      position: absolute; left: -7px; top: 26px;
+    }
+    .flow-step:last-child { border-left-color: transparent; }
+    .flow-step-num {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      color: var(--accent); text-transform: uppercase; margin-bottom: 4px;
+    }
+    .flow-step h4 { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+    .flow-step p { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+    .demo-form-wrap {
+      background: #161616; border-radius: 16px; padding: 36px;
+      border: 1px solid #2a2a2a;
+    }
+    .demo-form-wrap h3 {
+      font-size: 16px; font-weight: 700; color: var(--white);
+      margin-bottom: 6px;
+    }
+    .demo-form-wrap p {
+      font-size: 12px; color: rgba(255,255,255,0.35);
+      margin-bottom: 24px; line-height: 1.6;
+    }
+    .form-field { margin-bottom: 14px; }
+    .form-field label {
+      display: block; font-size: 11px; font-weight: 600;
+      color: rgba(255,255,255,0.4); letter-spacing: 0.5px;
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .form-field input, .form-field select {
+      width: 100%; padding: 11px 14px;
+      background: #0a0a0a; border: 1px solid #2a2a2a;
+      border-radius: 8px; color: var(--white);
+      font-family: 'Inter', sans-serif; font-size: 14px;
+      transition: border-color 0.2s; outline: none;
+    }
+    .form-field input:focus, .form-field select:focus { border-color: var(--accent); }
+    .form-field input::placeholder { color: rgba(255,255,255,0.2); }
+    .form-submit {
+      width: 100%; padding: 13px;
+      background: var(--accent); color: var(--white);
+      border: none; border-radius: 8px;
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+      cursor: pointer; margin-top: 8px;
+      transition: opacity 0.2s;
+    }
+    .form-submit:hover { opacity: 0.85; }
+    .demo-note {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-top: 16px; padding: 12px 14px;
+      background: rgba(108, 71, 255, 0.1); border-radius: 8px;
+      border: 1px solid rgba(108, 71, 255, 0.2);
+    }
+    .demo-note p { font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.6; margin: 0; }
+
+    /* ── PROCESO ── */
+    #proceso { background: var(--gray-100); }
+    .proceso-steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0; counter-reset: pasos;
+    }
+    .proceso-step {
+      padding: 36px 32px; position: relative;
+      counter-increment: pasos;
+    }
+    .proceso-step::before {
+      content: counter(pasos, decimal-leading-zero);
+      font-size: 48px; font-weight: 900; color: var(--gray-200);
+      display: block; margin-bottom: 16px; line-height: 1;
+    }
+    .proceso-step h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .proceso-step p { font-size: 13px; color: var(--gray-600); line-height: 1.7; }
+    .proceso-step + .proceso-step {
+      border-left: 1px solid var(--gray-200);
+    }
+
+    /* ── CONTACTO ── */
+    .contacto-wrap {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .contacto-text h2 {
+      font-size: clamp(28px, 4vw, 44px); font-weight: 800;
+      letter-spacing: -1px; line-height: 1.1; margin-bottom: 16px;
+    }
+    .contacto-text p { font-size: 16px; color: var(--gray-600); line-height: 1.7; margin-bottom: 32px; }
+    .contacto-channels { display: flex; flex-direction: column; gap: 12px; }
+    .channel {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 20px; border-radius: 12px;
+      border: 1px solid var(--gray-200); text-decoration: none;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .channel:hover { border-color: var(--black); transform: translateX(4px); }
+    .channel-ico {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .channel-ico.wsp { background: #dcfce7; }
+    .channel-ico.mail { background: var(--accent-light); }
+    .channel-ico.gh { background: var(--gray-100); }
+    .channel-info .channel-label { font-size: 11px; color: var(--gray-400); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .channel-info .channel-val { font-size: 14px; font-weight: 600; color: var(--black); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black); color: var(--white);
+      padding: 40px; text-align: center;
+    }
+    footer .footer-logo { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    footer .footer-logo span { color: var(--accent); }
+    footer p { font-size: 13px; color: rgba(255,255,255,0.35); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      section { padding: 72px 20px; }
+      .hero { padding: 100px 20px 60px; }
+      .demo-layout { grid-template-columns: 1fr; gap: 40px; }
+      .contacto-wrap { grid-template-columns: 1fr; gap: 40px; }
+      .proceso-step + .proceso-step { border-left: none; border-top: 1px solid var(--gray-200); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">maneyr<span>ao</span>studio</a>
+  <div class="nav-links">
+    <a href="#servicios">Servicios</a>
+    <a href="#proyectos">Proyectos</a>
+    <a href="#demo">Demo</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <a class="nav-cta" href="#contacto">Hablar →</a>
+</nav>
+
+<!-- HERO -->
+<div style="max-width:1100px; margin: 0 auto; padding: 0 40px;">
+  <section class="hero" style="max-width:100%; padding-left:0; padding-right:0;">
+    <div class="hero-badge">Morón, Buenos Aires · Argentina</div>
+    <h1>Automatizamos<br>tu <em>negocio</em><br>con tecnología.</h1>
+    <p class="hero-sub">Bot WhatsApp, tiendas online y automatizaciones reales para negocios que quieren crecer sin depender de procesos manuales.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#proyectos">Ver proyectos →</a>
+      <a class="btn-secondary" href="#servicios">Ver servicios</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">$150 USD</div>
+        <div class="stat-label">Precio de entrada</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Proyectos entregados</div>
+      </div>
+      <div>
+        <div class="stat-num">5 días</div>
+        <div class="stat-label">Tiempo promedio de entrega</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-inner">
+    <p class="section-tag">Servicios</p>
+    <h2 class="section-title">Lo que hacemos</h2>
+    <p class="section-sub">Soluciones concretas, entregadas en menos de una semana. Sin contratos largos ni burocracia.</p>
+    <div class="servicios-grid">
+
+      <div class="servicio-card featured">
+        <div class="servicio-ico">🤖</div>
+        <h3>Bot WhatsApp</h3>
+        <p>Respondé automáticamente las preguntas más frecuentes de tus clientes, las 24hs, sin pagar por IA.</p>
+        <ul class="servicio-features">
+          <li>Respuestas automáticas por palabras clave</li>
+          <li>Menú de opciones numerado</li>
+          <li>Notificación al admin cuando se necesita</li>
+          <li>Horarios de atención configurables</li>
+          <li>100% personalizable por negocio</li>
+        </ul>
+        <div class="servicio-precio">$150 <span>USD · pago único</span></div>
+      </div>
+
+      <div class="servicio-card">
+        <div class="servicio-ico">🛍️</div>
+        <h3>Tienda Online</h3>
+        <p>Tu negocio en internet, listo para recibir pedidos. Catálogo, precios, pagos y envíos configurados.</p>
+        <ul class="servicio-features">
+          <li>Diseño y configuración completa</li>
+          <li>Carga de productos con copy y fotos</li>
+          <li>Medios de pago integrados</li>
+          <li>WhatsApp flotante incluido</li>
+          <li>1 ronda de ajustes post-entrega</li>
+        </ul>
+        <div class="servicio-precio">desde $150 <span>USD · pago único</span></div>
+      </div>
+
+      <div class="servicio-card">
+        <div class="servicio-ico">⚡</div>
+        <h3>Automatización N8N</h3>
+        <p>Conectá tus herramientas para que trabajen solas. Leads, formularios, notificaciones y registros automáticos.</p>
+        <ul class="servicio-features">
+          <li>Formulario de contacto → WhatsApp</li>
+          <li>Registro automático en Google Sheets</li>
+          <li>Notificaciones instantáneas al equipo</li>
+          <li>Integración con Instagram, email, etc.</li>
+          <li>Sin conocimientos técnicos para operar</li>
+        </ul>
+        <div class="servicio-precio">desde $150 <span>USD · pago único</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos">
+  <div class="section-inner">
+    <p class="section-tag">Proyectos</p>
+    <h2 class="section-title">Lo que ya entregamos</h2>
+    <p class="section-sub">Casos reales, en producción y funcionando.</p>
+    <div class="proyectos-grid">
+
+      <div class="proyecto-card">
+        <div class="proyecto-img beauty">🎀</div>
+        <div class="proyecto-body">
+          <div class="proyecto-tags">
+            <span class="proyecto-tag">Tienda Online</span>
+            <span class="proyecto-tag">Bot WhatsApp</span>
+          </div>
+          <h3>Pelufo3D Beauty</h3>
+          <p>Tienda Nube completa para negocio de impresión 3D beauty en Buenos Aires. Catálogo, pagos, envíos y bot WhatsApp con 11 intenciones configuradas.</p>
+          <a class="proyecto-link" href="https://pelufo3d.com" target="_blank">Ver tienda →</a>
+        </div>
+      </div>
+
+      <div class="proyecto-card">
+        <div class="proyecto-img laser">✂️</div>
+        <div class="proyecto-body">
+          <div class="proyecto-tags">
+            <span class="proyecto-tag">Tienda Online</span>
+            <span class="proyecto-tag">$150 USD</span>
+          </div>
+          <h3>Laser Cut Designe</h3>
+          <p>Setup completo de tienda online para negocio de corte láser. Catálogo de productos personalizados, copy, medios de pago y sección "Sobre nosotros".</p>
+          <span class="proyecto-link" style="color: var(--gray-400); cursor: default;">En producción</span>
+        </div>
+      </div>
+
+      <div class="proyecto-card">
+        <div class="proyecto-img bot">🤖</div>
+        <div class="proyecto-body">
+          <div class="proyecto-tags">
+            <span class="proyecto-tag">Bot WhatsApp</span>
+            <span class="proyecto-tag">Open Source</span>
+          </div>
+          <h3>Bot WhatsApp Genérico</h3>
+          <p>Bot configurable para cualquier negocio. Sin IA, sin costos mensuales. Detección de intenciones, horarios, notificaciones al admin. Código abierto en GitHub.</p>
+          <a class="proyecto-link" href="https://github.com/peluffo3d-prog/bot-whatsapp-generico" target="_blank">Ver código →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DEMO N8N -->
+<section id="demo">
+  <div class="section-inner">
+    <p class="section-tag">Demo en vivo</p>
+    <h2 class="section-title">Automatización de leads</h2>
+    <p class="section-sub">Esto es lo que le armamos a tu negocio. Probalo: completá el formulario y vemos el flow en tiempo real.</p>
+    <div class="demo-layout">
+
+      <div class="demo-flow">
+        <div class="flow-step">
+          <div>
+            <div class="flow-step-num">Paso 01</div>
+            <h4>Visitante completa el formulario</h4>
+            <p>Nombre, negocio e interés. Cualquier formulario en tu sitio, landing o link de bio.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div>
+            <div class="flow-step-num">Paso 02</div>
+            <h4>N8N recibe el webhook</h4>
+            <p>En menos de 1 segundo, N8N intercepta los datos y dispara el workflow automáticamente.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div>
+            <div class="flow-step-num">Paso 03</div>
+            <h4>WhatsApp instantáneo al dueño</h4>
+            <p>Llegás un mensaje con todos los datos del lead. Nada se pierde, nada llega tarde.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div>
+            <div class="flow-step-num">Paso 04</div>
+            <h4>Registro automático en Google Sheets</h4>
+            <p>El lead queda guardado con fecha, datos y estado. Tu base de clientes crece sola.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-form-wrap">
+        <h3>Probá la automatización</h3>
+        <p>Completá el formulario — el sistema va a recibir tu consulta en tiempo real via N8N.</p>
+        <form id="demoForm" onsubmit="enviarDemo(event)">
+          <div class="form-field">
+            <label>Tu nombre</label>
+            <input type="text" placeholder="Nombre y apellido" required>
+          </div>
+          <div class="form-field">
+            <label>Negocio o rubro</label>
+            <input type="text" placeholder="Ej: peluquería, ropa, delivery..." required>
+          </div>
+          <div class="form-field">
+            <label>¿Qué necesitás?</label>
+            <select required>
+              <option value="">Seleccioná una opción</option>
+              <option>Bot WhatsApp</option>
+              <option>Tienda online</option>
+              <option>Automatización N8N</option>
+              <option>Bundle (bot + tienda)</option>
+              <option>Consulta general</option>
+            </select>
+          </div>
+          <button class="form-submit" type="submit">Enviar consulta →</button>
+        </form>
+        <div class="demo-note">
+          <p>⚡ Este formulario está conectado a N8N. Al enviarlo, la consulta llega por WhatsApp al equipo y queda registrada en Google Sheets automáticamente.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso">
+  <div class="section-inner">
+    <p class="section-tag">Cómo trabajamos</p>
+    <h2 class="section-title">Del contacto al proyecto entregado</h2>
+    <p class="section-sub">Simple y directo. Sin reuniones infinitas.</p>
+    <div class="proceso-steps">
+      <div class="proceso-step">
+        <h4>Hablamos por WhatsApp</h4>
+        <p>Contanos el negocio, qué necesitás y cuál es el problema que querés resolver. 15 minutos.</p>
+      </div>
+      <div class="proceso-step">
+        <h4>Propuesta en 24hs</h4>
+        <p>Te mandamos qué vamos a hacer, en cuánto tiempo y el precio exacto. Sin sorpresas.</p>
+      </div>
+      <div class="proceso-step">
+        <h4>Manos a la obra</h4>
+        <p>Arrancamos con el 50% de pago adelantado. Te mantenemos al tanto del avance.</p>
+      </div>
+      <div class="proceso-step">
+        <h4>Entrega y ajustes</h4>
+        <p>Entregamos en el plazo acordado con una ronda de ajustes incluida.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="section-inner">
+    <div class="contacto-wrap">
+      <div class="contacto-text">
+        <h2>¿Hablamos?</h2>
+        <p>Contanos qué necesita tu negocio. Si podemos ayudarte, te decimos cómo y cuánto cuesta. Si no, te decimos la verdad igual.</p>
+        <div class="contacto-channels">
+          <a class="channel" href="https://wa.me/549XXXXXXXXXX" target="_blank">
+            <div class="channel-ico wsp">💬</div>
+            <div class="channel-info">
+              <div class="channel-label">WhatsApp</div>
+              <div class="channel-val">Próximamente</div>
+            </div>
+          </a>
+          <a class="channel" href="mailto:jaas.i.elel2@gmail.com">
+            <div class="channel-ico mail">✉️</div>
+            <div class="channel-info">
+              <div class="channel-label">Email</div>
+              <div class="channel-val">jaas.i.elel2@gmail.com</div>
+            </div>
+          </a>
+          <a class="channel" href="https://github.com/peluffo3d-prog" target="_blank">
+            <div class="channel-ico gh">⌨️</div>
+            <div class="channel-info">
+              <div class="channel-label">GitHub</div>
+              <div class="channel-val">peluffo3d-prog</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div style="background:var(--gray-100); border-radius:20px; padding:40px;">
+          <p style="font-size:13px; color:var(--gray-400); text-transform:uppercase; letter-spacing:1px; font-weight:600; margin-bottom:16px;">Respuesta en</p>
+          <p style="font-size:48px; font-weight:900; letter-spacing:-2px; margin-bottom:8px;">menos<br>de 24hs</p>
+          <p style="font-size:14px; color:var(--gray-600); line-height:1.7;">Respondemos todos los días. Si el proyecto encaja, arrancamos esa misma semana.</p>
+          <div style="margin-top:32px; padding-top:24px; border-top:1px solid var(--gray-200);">
+            <p style="font-size:12px; color:var(--gray-400);">Basados en</p>
+            <p style="font-size:18px; font-weight:700;">Morón, Buenos Aires 📍</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">maneyr<span>ao</span>studio</div>
+  <p>Automatizamos negocios · Morón, Buenos Aires · 2026</p>
+</footer>
+
+<script>
+function enviarDemo(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+  // Acá va la URL del webhook de N8N cuando lo configuremos
+  // fetch('https://TU-N8N.railway.app/webhook/portfolio-leads', { ... })
+  setTimeout(() => {
+    btn.textContent = '✓ Enviado — el lead llegó por WhatsApp';
+    btn.style.background = '#16a34a';
+  }, 1200);
+}
+</script>
+
+</body>
+</html>
